@@ -2,3 +2,8 @@
 .DS_Store
 .vscode
 node_modules
+
+# The log in json stuff that I keep changing a lot, so I'm not including them.
+sign-in.json
+customer.json
+user.json
