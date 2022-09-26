@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser")
+const { v4: uuidv4 } = require('uuid');
 const path = require("path");
 const port = 3333;
 const app = express();
@@ -25,7 +26,6 @@ app.get("/login", (req, res) =>{
 });
 
 app.post("/login", (req, res) =>{
-    res.send("Logging in...");
     // I'm sure that this is very secure...
     console.log("User Logging In:")
     console.log(JSON.stringify(req.body));
@@ -33,4 +33,14 @@ app.post("/login", (req, res) =>{
     console.log("Login Email: ", loginEmail);
     const loginPassword = req.body.password;
     console.log("Login Password: ", loginPassword);
+
+    if (req.body.userName == "username" && req.body.password == "password"){
+        res.send("Wow... Your information is *really* insecure!\nNo token for you!");
+    }
+    else
+    {
+        const token = uuidv4();
+        res.send("Token: " + token);
+    }
+
 });
