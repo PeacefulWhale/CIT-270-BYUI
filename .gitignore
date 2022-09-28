@@ -7,3 +7,6 @@ node_modules
 sign-in.json
 customer.json
 user.json
+
+# My redis dumps, which don't need to be included.
+*.rdb
