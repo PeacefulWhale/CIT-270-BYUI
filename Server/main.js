@@ -2,7 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser")
 const { v4: uuidv4 } = require('uuid');
 const path = require("path");
-const redis = require('redis');
+const redis = require("redis");
+const crypto = require("crypto");
+const not_so_secret_key = "WaffleIron";
 
 // Express App.
 const port = 3333;
@@ -28,8 +30,9 @@ app.listen(port, async ()=>{
 
 app.get("/redis-test", async(req, res) =>{
     const testKey = await client.get("testKey");
-    console.log(testKey);
-    res.send(testKey);
+    const hashedKey = crypto.createHash("sha512", not_so_secret_key).update(testKey).digest("hex");
+    console.log("Key: " + testKey + '\n' + "Hash: " + hashedKey);
+    res.send("Key: " + testKey + '\n' + "Hash: " + hashedKey);
 });
 
 app.get("/", async(req, res) =>{
