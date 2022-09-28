@@ -2,30 +2,51 @@ const express = require("express");
 const bodyParser = require("body-parser")
 const { v4: uuidv4 } = require('uuid');
 const path = require("path");
+const redis = require('redis');
+
+// Express App.
 const port = 3333;
 const app = express();
-
 app.use(bodyParser.json())
 
+// Redis Stuff.
+const client = redis.createClient(6379);
+
+client.on('error', err => {
+    console.log('Error ' + err);
+});
+
+// App functions.
 app.listen(port, async ()=>{
+    await client.connect();
+    // This is me testing the redis connection...
+    await client.set("testKey", "Hello World!", function(err, reply) {
+        console.log(reply);
+    });
     console.log("Listening on port " + port);
 });
 
-app.get("/", (req, res) =>{
+app.get("/redis-test", async(req, res) =>{
+    const testKey = await client.get("testKey");
+    console.log(testKey);
+    res.send(testKey);
+});
+
+app.get("/", async(req, res) =>{
     res.send("Hello World!");
     console.log("User Connected");
 });
 
-app.get("/secret", (req, res) =>{
+app.get("/secret", async(req, res) =>{
     res.send("Is this how it handles users heading to other pages?");
     console.log("User Connected to 'Secret'");
 });
 
-app.get("/login", (req, res) =>{
+app.get("/login", async(req, res) =>{
     res.sendFile(path.join(__dirname, '/html/login.html'));
 });
 
-app.post("/login", (req, res) =>{
+app.post("/login", async(req, res) =>{
     // I'm sure that this is very secure...
     console.log("User Logging In:")
     console.log(JSON.stringify(req.body));
@@ -42,5 +63,4 @@ app.post("/login", (req, res) =>{
         const token = uuidv4();
         res.send("Token: " + token);
     }
-
 });
