@@ -1,6 +1,6 @@
 # Note, this dockerfile is not yet functional... I have to get redis working on it...
 
-FROM node:carbon
+FROM node:latest
 
 RUN mkdir /Server/
 
@@ -11,19 +11,21 @@ COPY ./package.json /Server/
 COPY ./package-lock.json /Server/
 COPY ./html /Server/html/
 COPY ./main.js /Server/
+COPY ./docker_start.sh /Server/
+RUN ["chmod", "+x", "/Server/docker_start.sh"]
 
 RUN npm install
 
-## These commands don't work yet... I'll figure it out later I guess.
+# The commands now work!
 
-## RUN apt-get update && apt-get install -y software-properties-common
-## 
-## RUN add-apt-repository ppa:redislabs/redis
-## 
-## RUN apt-get update
-## 
-## RUN apt-get install redis-server
+RUN apt-get update && apt-get install -y software-properties-common
+
+RUN apt-add-repository -r ppa:armagetronad-dev/ppa
+
+RUN apt-get update -q
+
+RUN apt-get install -y redis-server
 
 EXPOSE 3333
 
-ENTRYPOINT [ "node main.js | tee -ia logs.txt" ]
+ENTRYPOINT [ "/Server/docker_start.sh" ]

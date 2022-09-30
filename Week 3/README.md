@@ -32,8 +32,14 @@ It's good to have both though, as I can do testing and stuff on the VM a little 
 
 Build Container: `docker build --pull --rm -f "CIT-270-BYUI/Server/Dockerfile" -t cit270:latest "CIT-270-BYUI/Server"`
 
-Run Container: `docker run -it --rm -p 1111:3333 cit270` (I'm using 1111 for the docker container and 3333 for my VM, but it shouldn't matter because the VM isn't `localhost`).
+Run Container: `docker run -it --rm -p 1111:3333 cit270` (I'm using 1111 for the docker container and 3333 for my VM, but it shouldn't matter because the VM isn't `localhost`). I personally use the docker desktop to run it, as I just find it's a little bit easier to work with than the command line in this situation.
 
-I haven't finished the docker file yet... I need to figure out how to get redis running on it.
+I haven't finished the docker file yet... I need to figure out how to get redis running on it...
 
-Also to check the redis server you can run the command: `LRANGE key 0 -1` inside the `redis-cli`
+## Friday After-Class Update
+
+Okay, now I've gotten docker up and running. I can access the server at `http://localhost:1111`.
+
+Thankfully it didn't take me as long as I feared it would. I just had to update the docker file and add a startup script. Bonus: I can now use this startup script on my virtual machine too.
+
+I'll probably come back some time and update the startup script so it is actually useful... But it works for now.
