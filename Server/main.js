@@ -73,6 +73,13 @@ app.post("/user", async(req, res) => {
     console.log("New User: " + new_user + "Email: " + req.body.email);
     // TODO: Add actual logic so this doesn't just try to write everything every time.
     // I'll have to use client.hGet or client.hExists probably.
-    client.hSet('users', req.body.email, new_user);
-    res.send("User registered! Hopefully you didn't overwrite anyone!");
+    if (await client.hExists("users", req.body.email))
+    {
+        res.send("User cannot be registered, email already in use!");
+    }
+    else
+    {
+        await client.hSet("users", req.body.email, new_user); 
+        res.send("User registered! Hopefully you didn't overwrite anyone!");
+    }
 });
