@@ -17,3 +17,7 @@ It looks like there is a better way to store json with redis: [https://redis.com
 I'll get around to setting this up and working with it eventually, but for now reading and parsing JSON strings will do.
 
 Also `http` stuff isn't secure... But this is also a local VM that can only be connected to from my machine. And what would one do if they gained control over this VM? At that point they probably can own my entire system and I have bigger problems.
+
+## Friday
+
+Now the server hashes the passwords with `SHA-1` and a weak secret key.
