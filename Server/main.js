@@ -6,9 +6,14 @@ const redis = require("redis");
 const crypto = require("crypto");
 const { Console } = require("console");
 const not_so_secret_key = "WaffleIron";
+// HTTPS Refactor stuff...
+const fs = require("fs");
+const http = require("http");
+const https = require("https");
 
 // Express App.
-const port = 3333;
+const httpPort = 3333;
+const httpsPort = 4444;
 const app = express();
 app.use(bodyParser.json())
 
@@ -20,11 +25,37 @@ client.on('error', err => {
 });
 
 // App functions.
-app.listen(port, async () => {
-    await client.connect();
-    console.log("Listening on port " + port);
+// app.listen(port, async () => {
+//     await client.connect();
+//     console.log("Listening on port " + port);
+// });
+
+// HTTP/HTTPS stuff
+const privateKey  = fs.readFileSync("./SSL/server.key", "utf8");
+const certificate = fs.readFileSync("./SSL/server.crt", "utf8");
+const credentials = {key: privateKey, cert: certificate};
+const httpsServer = https.createServer(credentials, app);
+
+// Simple HTTP server that just redirects stuff.
+const httpApp = express();
+const httpServer = http.createServer(httpApp);
+httpServer.listen(httpPort, async () => {
+    // await client.connect();
+    console.log("HTTP Server listening on port " + httpPort);
+});
+httpApp.all("*", async (req, res) => {
+    // Hardcoding the base URL is a *great* idea... The only problem is on my docker container this will break XD
+    // But as I'm running everything on my VM right now, this doesn't really matter I guess.
+    res.redirect(301, "https://" + "192.168.64.9:" + httpsPort + req.url);
 });
 
+// HTTPS Server Listen.
+httpsServer.listen(httpsPort, async () => {
+    await client.connect();
+    console.log("HTTPS Server listening on port " + httpsPort);
+});
+
+// Actual app stuff.
 app.get("/", async (req, res) => {
     res.send("Hello World!");
     console.log("User Connected");

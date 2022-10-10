@@ -10,3 +10,6 @@ user.json
 
 # My redis dumps, which don't need to be included.
 *.rdb
+
+# Keeping keys secret is good idea I think...
+SSL
