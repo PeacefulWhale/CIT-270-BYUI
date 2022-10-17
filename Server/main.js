@@ -33,7 +33,8 @@ client.on('error', err => {
 // HTTP/HTTPS stuff
 const privateKey  = fs.readFileSync("./SSL/server.key", "utf8");
 const certificate = fs.readFileSync("./SSL/server.crt", "utf8");
-const credentials = {key: privateKey, cert: certificate};
+const chain = fs.readFileSync("./SSL/server.chain", "utf-8");
+const credentials = {key: privateKey, cert: certificate, ca: chain};
 const httpsServer = https.createServer(credentials, app);
 
 // Simple HTTP server that just redirects stuff.
