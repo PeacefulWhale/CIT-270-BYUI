@@ -39,5 +39,3 @@ I'll change my http port to `80` and my https port to `443` to see if it actuall
 So I've got that up and working now... I changed nothing but swapped to using the default ports. I even had to add those ports to the allowed ports on my Cloud Console. So I'm not really sure what was going on, but at least it's not a problem anymore.
 
 I really should fix my whole redirection thing from HTTP to HTTPS so I don't have to rely off the hardcoded url...
-
-My teacher tells me I probably needed to change the linux server 
