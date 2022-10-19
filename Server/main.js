@@ -12,8 +12,8 @@ const http = require("http");
 const https = require("https");
 
 // Express App.
-const httpPort = 3333;
-const httpsPort = 4444;
+const httpPort = 80;
+const httpsPort = 443;
 const app = express();
 app.use(bodyParser.json())
 
@@ -47,7 +47,7 @@ httpServer.listen(httpPort, async () => {
 httpApp.all("*", async (req, res) => {
     // Hardcoding the base URL is a *great* idea... The only problem is on my docker container this will break XD
     // But as I'm running everything on my VM right now, this doesn't really matter I guess.
-    res.redirect(301, "https://" + "192.168.64.9:" + httpsPort + req.url);
+    res.redirect(301, "https://peacefulwhale.cit270.com/" + req.url);
 });
 
 // HTTPS Server Listen.

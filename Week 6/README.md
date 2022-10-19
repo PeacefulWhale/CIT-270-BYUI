@@ -1,4 +1,4 @@
-# Week 6
+# Week Six
 
 ## Monday
 
@@ -24,10 +24,20 @@ Specifically, I'm getting `no alternative certificate subject name matches targe
 
 That doesn't work... Have I set up `peacefulwhale.cit720.com` properly? I thought I did last time, but now I'm not sure...
 
-It is set up there, this is probably coming down to my weird choice of port... Will changing my http port to `80` help? Nope, I need root privilege to use any port below ~1000. I think I can fix this with `sudo setcap cap_net_bind_service=+ep readlink -f which node`
+It is set up there, this is probably coming down to my weird choice of port... Will changing my http port to `80` help? Nope, I need root privilege to use any port below ~1000. I think I can fix this with `sudo setcap CAP_NET_BIND_SERVICE=+eip $(which node)`
 
 Also the rest of the class has finally swapped to running `nvm`.
 
 Now it's listening on port 80, but I have the same problem of `Could not resolve host: peacefulwhale.cit720.com`... I'll figure this out sometime, but for now I'm just going to bury my head in the sand and pretend it's not a problem.
 
 I'll probably just wait for the rest of my class to get to the step where we start to actually run the server, and I should be able to just follow along then.
+
+## Wednesday
+
+I'll change my http port to `80` and my https port to `443` to see if it actually works if I do that. If it does I'm guessing I wasn't opening my ports up properly, or that I was not routing the traffic right.
+
+So I've got that up and working now... I changed nothing but swapped to using the default ports. I even had to add those ports to the allowed ports on my Cloud Console. So I'm not really sure what was going on, but at least it's not a problem anymore.
+
+I really should fix my whole redirection thing from HTTP to HTTPS so I don't have to rely off the hardcoded url...
+
+My teacher tells me I probably needed to change the linux server 
