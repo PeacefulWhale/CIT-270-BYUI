@@ -39,3 +39,11 @@ I'll change my http port to `80` and my https port to `443` to see if it actuall
 So I've got that up and working now... I changed nothing but swapped to using the default ports. I even had to add those ports to the allowed ports on my Cloud Console. So I'm not really sure what was going on, but at least it's not a problem anymore.
 
 I really should fix my whole redirection thing from HTTP to HTTPS so I don't have to rely off the hardcoded url...
+
+## Friday
+
+The class is creating a new VM for the redis-server... I'm not sure why we don't just run it on the same VM that we're running the server as... I entered class a little bit later, and I'm already running the redis-server on the current VM, so for now I'll just keep it this way. If in the future there's a reason for running them on separate VMs I'll set that up quickly. For now, I'll just keep going the way I've been going.
+
+We also have to set up the redis-server to handle being connected to remotely.
+
+I'll go through and set this up at a later date I guess, even if it makes the project more expensive.
