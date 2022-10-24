@@ -2,6 +2,7 @@
 .DS_Store
 .vscode
 node_modules
+preferences.json
 
 # The log in json stuff that I keep changing a lot, so I'm not including them.
 sign-in.json
