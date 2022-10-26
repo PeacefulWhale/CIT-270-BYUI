@@ -19,25 +19,27 @@ const httpsPort = preferences.httpsPort;
 const app = express();
 app.use(bodyParser.json())
 
-// Redis Stuff.
-const client = redis.createClient(6379);
-
-client.on('error', err => {
-    console.log(err);
-});
-
-// App functions.
-// app.listen(port, async () => {
-//     await client.connect();
-//     console.log("Listening on port " + port);
-// });
-
 // HTTP/HTTPS stuff
 const privateKey  = fs.readFileSync("./SSL/server.key", "utf8");
 const certificate = fs.readFileSync("./SSL/server.crt", "utf8");
 const chain = fs.readFileSync("./SSL/server.chain", "utf-8");
 const credentials = {key: privateKey, cert: certificate, ca: chain};
 const httpsServer = https.createServer(credentials, app);
+
+// Redis Stuff.
+const redisPort = preferences.redisPort;
+const redisURL = preferences.redisIP;
+const client = redis.createClient(
+    {
+        host: redisURL,
+        port: redisPort
+    }
+);
+
+client.on('error', err => {
+    console.log(err);
+});
+
 
 // Simple HTTP server that just redirects stuff.
 const httpApp = express();

@@ -29,3 +29,47 @@ And now anyone on the internet can access this completely unfinished website! Ya
 Next class we'll be looking at using docker / kubernetes, so not using the redis server on a separate VM probably won't matter then. If we're actually using a kubernetes / docker service and not just running kubernetes on this VM.
 
 Till next time I guess.
+
+## Wednesday
+
+Today we are setting up a docker container. We're also going to be using Google's "cloud shell", which seems neat.
+
+The readme has some important information:
+
+```txt
+Your 5GB home directory will persist across sessions, but the VM is ephemeral and will be reset approximately 20 minutes after your session ends. No system-wide change will persist beyond that.
+```
+
+We generated an SSH key so we could add it to our github profile, however I really don't want to add keys that I might loose track of, so I'll just keep updating my git repo from my main computer.
+
+If I had to guess, this is why we created a separate redis server? So we can connect to that without having to install redis in our docker container?
+
+After copying over the `preference.json` and `SSL/*` files, the container is up and running.
+
+However, the docker container is very sad that it cannot connect to the redis server. I can be lazy and add the redis server stuff to the `Dockerfile` (like I did earlier) but I'll hold off on that for now to see if there's a way that we're supposed to fix this in our class.
+
+Also it's snowing outside, but the ground, cars, and buildings are all too warm for it to stick, so everything is just wet.
+
+It's very pretty however.
+
+Also there's a `Cloud Code` extension that looks interesting.
+
+The review rate of extensions are always kinda funny to me. The extension has half a million installs and less than 30 reviews.
+
+Also google has a few extensions they've published... Including a `wireit` script runner? What is `wireit`? Apparently it's [this](https://github.com/google/wireit). Neat. I don't use a lot of NPM stuff, but if I ever do maybe I'll give this a look.
+
+Okay, now we're getting this connected to our redis-server.
+
+I don't think that my redis-server is accepting requests from outside connections (at least it shouldn't). So I'm not 100% sure what I should be doing here.
+
+I should *probably* get that redis server running, but I'm still not sure why we haven't set up any sort of authentication for connecting to the redis server. Setting up a redis access list isn't terribly difficult to my knowledge...
+
+For now I'll go the lazy route of installing and running redis.
+
+To be honest, a better way of doing this would probably be to build two docker containers, one for the server and one for the redis server. Or maybe even just use the redis server VM. But for now I'll hope that running redis inside the docker container is okay.
+
+I'll eventually through and purge the many containers I created in the process of getting everything to work XD
+
+For now they shall clutter...
+
+Anyway the docker container is up and running and I can connect to it. Everything appears to be working.
