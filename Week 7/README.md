@@ -73,3 +73,15 @@ I'll eventually through and purge the many containers I created in the process o
 For now they shall clutter...
 
 Anyway the docker container is up and running and I can connect to it. Everything appears to be working.
+
+## Friday
+
+Oh, when you boot up a new cloud shell, all the docker stuff gets purged, so I don't need to worry about cleaning it up.
+
+That's convenient.
+
+I just run `docker build . -t test`, then `docker run test`.
+
+I can check to see if my server is up and running with `curl --insecure https://172.18.0.2:443` and I get `Hello World!` back.
+
+Everyone spent today getting their server up and running, but mine already was, so I worked on other projects today.
