@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: busybox
+  name: busybox-peacefulwhale
   namespace: default
 spec:
   containers:
@@ -10,6 +10,13 @@ spec:
       - sleep
       - "-m"
       - "5"
+    resources:
+      requests:
+        cpu: 0.125
+        memory: 500Mi
+      limits:
+        cup: 0.125
+        memory: 600Mi
     imagePullPolicy: IfNotPresent
-    name: busybox
+    name: busybox-peacefulwhale
   restartPolicy: Always
