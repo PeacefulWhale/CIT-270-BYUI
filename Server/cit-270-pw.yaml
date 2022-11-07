@@ -7,7 +7,7 @@ spec:
   containers:
   - image: unpeacefulwhale/cit-270-pw
     volumeMounts:
-    - name: SSL
+    - name: ssl
       mountPath: "/usr/src/app/SSL"
     command: ["/bin/bash"]
     args: ["./start.sh"]
@@ -21,7 +21,7 @@ spec:
     imagePullPolicy: IfNotPresent
     name: peacefulwhale
   volumes:
-  - name: SSL
+  - name: ssl
     secret: 
       secretName: ssl.secret
   restartPolicy: Always
