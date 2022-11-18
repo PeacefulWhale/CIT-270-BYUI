@@ -40,6 +40,9 @@ client.on('error', err => {
     console.log(err);
 });
 
+// public folder thingy.
+app.use(express.static("public"))
+
 
 // Simple HTTP server that just redirects stuff.
 const httpApp = express();
