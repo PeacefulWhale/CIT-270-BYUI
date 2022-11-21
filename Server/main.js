@@ -18,6 +18,8 @@ const httpPort = preferences.httpPort;
 const httpsPort = preferences.httpsPort;
 const app = express();
 app.use(bodyParser.json())
+// public folder thingy.
+app.use(express.static(path.join(__dirname, "public")))
 
 // HTTP/HTTPS stuff
 const privateKey  = fs.readFileSync("./SSL/server.key", "utf8");
@@ -39,10 +41,6 @@ const client = redis.createClient(
 client.on('error', err => {
     console.log(err);
 });
-
-// public folder thingy.
-app.use(express.static("public"))
-
 
 // Simple HTTP server that just redirects stuff.
 const httpApp = express();

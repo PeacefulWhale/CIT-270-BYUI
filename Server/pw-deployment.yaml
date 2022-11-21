@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: pw-cit-270
-        image: unpeacefulwhale/cit-270-pw
+        image: unpeacefulwhale/cit-270-pw:latest
         volumeMounts:
         - name: ssl
           mountPath: "/usr/src/app/SSL"

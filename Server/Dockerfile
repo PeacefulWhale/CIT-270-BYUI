@@ -2,12 +2,9 @@ FROM node:latest
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-
-RUN npm install
-
 COPY . .
 RUN ["chmod", "+x", "start.sh"]
+RUN npm install
 
 # Redis Stuff
 RUN apt-get update && apt-get install -y software-properties-common
