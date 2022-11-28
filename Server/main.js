@@ -31,10 +31,10 @@ const httpsServer = https.createServer(credentials, app);
 // Redis Stuff.
 const redisPort = preferences.redisPort;
 const redisURL = preferences.redisIP;
+const redisPass = process.env.REDIS_PASS;
 const client = redis.createClient(
     {
-        host: redisURL,
-        port: redisPort
+        url: `redis://default:`+ redisPass + `@` + redisURL + `:` + redisPort
     }
 );
 

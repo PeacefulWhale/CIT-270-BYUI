@@ -22,6 +22,12 @@ spec:
         args: ["./start.sh"]
         ports:
           - containerPort: 443
+        env:
+        - name: REDIS_PASS
+          valueFrom:
+            secretKeyRef:
+              name: redis-secrets-pw
+              key: REDIS_PASS
         resources:
           requests:
             cpu: 0.125
