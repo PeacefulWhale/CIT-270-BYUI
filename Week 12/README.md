@@ -65,3 +65,44 @@ Notes:
 - The reason why the company (being interviewed) exists, is because other companies can't find the right people.
 - AWS Cloud Practitioner CERT is a cool thing to get.
 - Communication is important. "Architects" tend to get paid more than engineers.
+
+## Friday
+
+Today we watched another video. I'll probably have to work on fixing the errors in my deployment myself.
+
+- Who we're talking to:
+  - The guy we're talking to made some mobile apps.
+  - Helped build up the engineering department of an app called CLIP.
+  - CTO of Say (asynchronous video messaging)
+  - Founder of WildML, which allows for automated wildlife / livestock surveys.
+  - VP of Engineering for a cookie shop. They mostly utilize AWS.
+- Managed Services are pretty neat.
+  - Examples:
+    - Amazon DynamoDB
+    - Amazon SQS
+    - Amazon Lambda
+    - Cube
+    - Next.js on Vercel
+    - Snowflake
+  - I've used some of these Amazon ones.
+  - Managed services allow for one to focus on business problems and not technological problems. The hard work of managing a service / database / infrastructure is done for you.
+  - Scaling vertically / horizontally becomes a lot easier on such services.
+- Pain points of his company:
+  - Need for product-minded engineers.
+    - Training engineers to be more business focused.
+    - Similar to what the guy yesterday said.
+- Things to do as a student:
+  - Become a product-minded problem solver.
+  - Focus on business values.
+  - Gain relevant expedience.
+- What does growth look like for engineers and IT professionals?
+  - Tech lead / architect / engineer / etc.
+  - Leadership is important as always.
+  - Have a growth path in mind.
+  - You do not work for fun. You work to survive.
+  - Be as cut throat as possible, nothing will stand in your way.
+- Knowledge is good to have. Get it.
+- Technology changes fast, so having an understanding of base principals is important.
+- Learning how to develop a product is important.
+- Projects are neat, especially if they're something you can share or turn into a miniature business.
+- Good soft skills are very important.
