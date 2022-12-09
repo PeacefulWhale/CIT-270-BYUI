@@ -12,10 +12,9 @@ const http = require("http");
 const https = require("https");
 
 // Express App.
-const preferences = JSON.parse(fs.readFileSync("./preferences.json", "utf8"));
-const baseurl = preferences.baseurl;
-const httpPort = preferences.httpPort;
-const httpsPort = preferences.httpsPort;
+const baseurl = "https://peacefulwhale.cit270.com";
+const httpPort = 80;
+const httpsPort = 443;
 const app = express();
 app.use(bodyParser.json())
 // public folder thingy.
@@ -29,12 +28,11 @@ const credentials = {key: privateKey, cert: certificate, ca: chain};
 const httpsServer = https.createServer(credentials, app);
 
 // Redis Stuff.
-const redisPort = preferences.redisPort;
-const redisURL = preferences.redisIP;
 const redisPass = process.env.REDIS_PASS;
+const redisConnection = "redis://default:" + redisPass + "@redis-pw:6379";
 const client = redis.createClient(
     {
-        url: `redis://default:`+ redisPass + `@` + redisURL + `:` + redisPort
+        url: redisConnection
     }
 );
 
@@ -57,6 +55,7 @@ httpApp.all("*", async (req, res) => {
 
 // HTTPS Server Listen.
 httpsServer.listen(httpsPort, async () => {
+    console.log("Connecting to: ", redisConnection);
     await client.connect();
     console.log("HTTPS Server listening on port " + httpsPort);
 });
@@ -101,6 +100,10 @@ app.get("/login", async (req, res) => {
     res.sendFile(path.join(__dirname, '/html/login.html'));
 });
 
+// LOCK OUT LOGIC
+const lockOutCount = 3;
+const lockOutTime = 300;
+
 app.post("/login", async (req, res) => {
     // I'm sure that this is very secure...
     console.log("User logging in.")
@@ -124,14 +127,42 @@ app.post("/login", async (req, res) => {
     try {
         if (await client.hExists("users", loginEmail)) {
             console.log("User exists...");
-            const userData = JSON.parse(await client.hGet('users', loginEmail));
+            var userData = JSON.parse(await client.hGet("users", loginEmail));
+            var lockOuts = parseInt(await client.hGet("lockOutCount", loginEmail));
+            var lockTime = parseInt(await client.hGet("lockOutTime", loginEmail));
+            var currentTime = Math.floor(new Date().getTime() / 1000);
+            console.log("lockOuts: ", lockOuts);
+            console.log("lockTime: ", lockTime);
+            console.log("currentTime: ", currentTime); 
+            // Locked out.
+            if (lockOuts > lockOutCount)
+            {
+                // Enough time has passed.
+                if (currentTime > lockTime + lockOutTime)
+                {
+                    await client.hSet("lockOutCount", loginEmail, "0");
+                }
+                else
+                {
+                    console.log("User locked out for ", String((lockTime + lockOutTime) - currentTime), " seconds");
+                    res.send("Sorry, but you are locked out for " + String((lockTime + lockOutTime) - currentTime) + " seconds");
+                    // Do not continue.
+                    return -1;
+                }
+            }
+            // If they got here, then enough time has passed for them to try to log in again.
             if (loginPassword === userData.password) {
                 console.log("User gave correct password.");
                 const token = uuidv4();
+                await client.hSet("lockOutCount", loginEmail, "0");
                 res.send("Congratulations on logging in!\n Here's your token: " + token);
             }
             else {
                 console.log("Incorrect password...");
+                // Increase the lockOutCount.
+                await client.hSet("lockOutCount", loginEmail, String(lockOuts + 1));
+                // Update the lockOutTime.
+                await client.hSet("lockOutTime", loginEmail, String(currentTime));
                 res.status(403);
                 res.send("That's not the right password!");
             }

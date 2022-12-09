@@ -105,7 +105,7 @@ function changePassword(){
             alert("Password successfully updated!");
             window.location.href="/index.html"
         },
-        contentType: "application/text",
+        contentType: "application/json",
         dataType:"text"
 
 
@@ -155,7 +155,7 @@ function createuser(){
                 alert("Email or cell # has already been registered");
             }
         },
-        contentType: "application/text",
+        contentType: "application/json",
         dataType: 'text'
     });
 }
